@@ -159,6 +159,6 @@ to modify his value is needed to instance it in another variable.
     import Button from './components/Button'
 
     ReactDOM.render(
-        <Button text="Click" number="3" />,
+        <Button text="Click" number=3 />,
         document.getElementById('root')
     )
