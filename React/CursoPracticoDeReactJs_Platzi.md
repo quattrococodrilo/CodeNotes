@@ -121,4 +121,44 @@ end with extension __.jsx__.
 
 __Note__: React needs that all HTML tags are closed.  
 
+## Props
 
+Props are like a parameters in the functions. Allows pass values
+to the class and functions components. "Props" are read only, 
+to modify his value is needed to instance it in another variable.
+
+    // Button.jsx
+    // ----------------------------------
+
+    import React from 'react'
+
+    const Button = props => {
+        const { text, number } = props
+        return (
+            <div>
+               <button type="button">
+                    { props.text }
+               </button> 
+               <button type="button">
+                    { text }
+               </button> 
+               <button type="button">
+                    { number }
+               </button> 
+            </div>
+        )
+    }
+
+    export default Button
+
+    // index.js
+    // ----------------------------------
+
+    import React from 'react'
+    import ReactDOM from 'react-dom'
+    import Button from './components/Button'
+
+    ReactDOM.render(
+        <Button text="Click" number="3" />,
+        document.getElementById('root')
+    )
