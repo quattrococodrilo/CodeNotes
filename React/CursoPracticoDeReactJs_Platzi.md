@@ -148,8 +148,9 @@ to modify his value is needed to instance it in another variable.
             </div>
         )
     }
-
+    
     export default Button
+
 
     // index.js
     // ----------------------------------
