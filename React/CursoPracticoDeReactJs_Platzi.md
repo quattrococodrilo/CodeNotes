@@ -68,6 +68,8 @@ robust component of React.
     
     export default Stateful
 
+__State__ in React is an object, in it is possible to declare variables. 
+
 ### Stateless
 
 This component does not depend on a life cycle or state,
@@ -163,3 +165,59 @@ to modify his value is needed to instance it in another variable.
         <Button text="Click" number=3 />,
         document.getElementById('root')
     )
+
+## Events
+    
+Events can manipulate actions on HTML, to call them it is used camelcase.
+
+    import React from 'react'
+
+    class Button extends React.Component {
+        state = {
+            count: 0
+        }
+        handleClick = () => {
+            this.setState({
+                count: this.state.count + 1
+            })
+        }
+        render() {
+            const {count} = tis.state
+            return (
+                <div>
+                    <h1>Apples: {count}</h1>
+                    <button type="button" onClick={this.handleClick}>
+                        Add
+                    </button>
+                </div>
+            )
+        }
+    }
+    
+    export default Button
+
+## Environment installation and configuration
+
+Root directory:
+
+    mkdir PlatziVideo && cd PlatziVideo
+
+Initialize Git:
+
+    git init
+
+Initialize project:
+
+    npm init -y
+
+### Structure
+
+__src__: In this directory lives all code.
+    
+  - __components__
+    
+    - index.js: enter point
+
+__public__: All elements that will be public in production.
+
+  - index.html
