@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import argparse
+import json
 import os
 import subprocess
 from urllib import request
@@ -41,18 +42,34 @@ class Reactor:
             {
                 "path": os.path.join(self._project, ".babelrc"),
                 "url": "https://github.com/quattrococodrilo/CodeNotes/blob/main/React/Template/.babelrc"
+            },
+            {
+                "path": os.path.join(self._project, "webpack.config.js"),
+                "url": "https://raw.githubusercontent.com/quattrococodrilo/CodeNotes/main/React/Template/webpack.config.js"
             }
         ]
 
+    def scripts(self):
+        """ Scripts to package json. """
+
+        return {
+            "test": "echo \"Error: no test specified\" && exit 1",
+            "build": "webpack --mode production",
+            "start": "webpack-dev-server --open --mode development",
+        }
+
     def npm_modules(self):
         """ NPM Modules to be installed. """
+
         return [
             "npm install react react-dom",
             "npm install @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev",
+            "npm install webpack webpack-cli html-webpack-plugin html-loader --save-dev"
         ]
 
     def reaction(self):
         """ Creates a structure project, files and install NPM packages. """
+
         files_to_create = self.files()
         not os.path.isdir(self._public) and os.makedirs(self._public)
         not os.path.isdir(self._project) and os.makedirs(self._project)
@@ -79,6 +96,15 @@ class Reactor:
                 os.system("npm init -y")
                 for module in modules:
                     os.system(module)
+                    pass
+
+                package_file = os.path.join("package.json")
+                package_data = ""
+                with open(package_file, "r") as f:
+                    package_data = json.loads(f.read())
+                package_data["scripts"] = self.scripts()
+                with open(package_file, "w") as f:
+                    f.write(json.dumps(package_data))
             else:
                 print("NPM not found.")
 
