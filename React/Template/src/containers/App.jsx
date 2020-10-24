@@ -1,18 +1,15 @@
 // React
 import React from 'react'
 
-// Styles
-import '../assets/styles/App.scss'
-
 // Components
-import Header from '../components/Header'
+import Navbar from '../components/Navbar'  
+import Footer from '../components/Footer'  
 
-const App = () => {
-  return (
+const App = () => (
     <div className="App">
-      <Header />
+        <Navbar />
+        <Footer></Footer>
     </div>
-  )
-}
+)
 
 export default App

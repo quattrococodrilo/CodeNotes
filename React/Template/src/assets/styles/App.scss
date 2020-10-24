@@ -1,0 +1,14 @@
+/* LIBS */
+@import './lib/variables.scss';
+
+/* Components */
+@import "./components/Navbar.scss";
+@import "./components/Footer.scss";
+Foo
+
+body {
+    margin: 0;
+}
+
+/* Bootstrap */
+@import "~bootstrap/scss/bootstrap";

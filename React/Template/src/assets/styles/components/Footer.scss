@@ -1,0 +1,11 @@
+.Footer {
+    background-color: $color2;
+}
+
+.Footer_links {
+    text-decoration: none;
+    color: white;
+    &:hover{
+        color: $color4;
+    }
+}

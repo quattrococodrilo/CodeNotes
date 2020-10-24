@@ -1,0 +1,7 @@
+[*]
+insert_final_line = false
+
+[*,{js,jsx,html,css,scss}]
+charset = utf-8
+indent_style = space
+ident_size = 2
