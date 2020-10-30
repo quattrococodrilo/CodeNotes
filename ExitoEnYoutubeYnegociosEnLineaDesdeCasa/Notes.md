@@ -27,4 +27,10 @@
 
 - Se puede comenzar a monetizar desde los 1000 subscriptores y 4000 horas de vistas.
 
+## Cámaras
 
+- Logitec C920HD : max 1080p
+
+- Logitec Brio 4k pro webcam
+
+- 

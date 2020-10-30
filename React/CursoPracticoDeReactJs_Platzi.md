@@ -236,6 +236,111 @@ Initialize project:
 
 - index.html
 
+## Nesting components
+
+To nest a component in another, the first component must have a div as a top element.
+
+## Import image
+
+    import logo from '../assets/static/logo.png';
+
+    const Header = () => (
+        <div className="header">
+            <img src="{log}" alt="This is a logo">
+        </div>
+    );
+
+## React Hooks: useEffect and useState
+
+__useState__: Returns an array with two elements: first position corresponds to state,
+second position is a function that allow update status. The parameter sent to the
+function corresponds to the initial state.
+
+__useEffect__: Allows executing code when it's mounted, unmounted or updated a component. The first argument sent to this function is an anonymous function that will be executed when React mount or update a component. This function can return a function that will be executed when a component is unmounted.
+
+The second argument is an array to specify which properties must change to React call again this function. If a component is updated but this props no are changed, the function will not be executed.
+
+By default, when not exist a second argument, React will execute the useEffect each time the component or his components parents are updated. If it is sent an empty array this function only will be executed in the mount or unmount cycles. 
+
+
+`const [myState, setNewState] = useState(propToInitializeStatus)`
+
+    import React, {useState, useEffect} from 'react';
+    // import React, React.useState, React.useEffect from 'react';
+
+    const App = () => {
+      const [videos, setVideos] = useState({ 
+        mylist: [], trends: [], originals: [] 
+      });
+      useEffect(() => {
+        fetch(API)
+          .then(response => response.json())
+          .then(data => setVideos(data))
+      }, []);
+
+      return (
+        <div class='App'>
+          <p>
+            { videos }
+          </p>
+        </div>
+      )
+    };
+
+## Custom Hooks
+
+This hooks are saved in `src/hooks/yourCustomHook.js`.
+
+    import React, {useState, useEffect} from 'react'
+
+    const useInitialState = (API) => {
+      const [ videos, setVideos ] = useState({ 
+        mylist: [], trends: [], originals: [] 
+      });
+      useEffect(() => {
+        fetch(API)
+          .then(response => response.json())
+          .then(data => setVideos(data));
+      }, []);
+
+      return videos;
+    };
+
+    export default useInitialState;
+
+In the component:
+    
+    import useInitialState from '../path/to/hook/useInitialState';
+
+    const API = 'thisIsAnAPI'
+
+    const App = () => {
+      const initialState = useInitialState(API)
+
+      return (
+        <div class='App'>
+          <p>
+            { initialState }
+          </p>
+        </div>
+      )
+
+## PropTypes
+
+This allows a dynamic way to verify data type passed to a component.
+
+    import React from 'react';
+    import PropTypes from 'prop-types'
+
+    ...
+    
+    SomeComponent.propTypes = {
+      cover: PropTypes.string,
+      year: PropTypes.number,
+    }
+
+    export default SomeComponent;
+
 ## Project configuration
 
 `mkdir ProjectName && cd ProjectName`
@@ -252,6 +357,10 @@ Initialize project:
 ### React
 
 `npm install react react-dom`
+
+###
+
+`npm install prop-types`
 
 ### Babel
 
@@ -280,16 +389,3 @@ Initialize project:
 `npm install react-bootstrap bootstrap`
 
 
-# Nesting components
-
-To nest a component in another, the first component must have a div as a top element.
-
-# Import image
-
-    import logo from '../assets/static/logo.png';
-
-    const Header = () => (
-        <div className="header">
-            <img src="{log}" alt="This is a logo">
-        </div>
-    );

@@ -1,0 +1,19 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  margin-bottom: 60px;
+}
+
+/* LIBS */
+@import './lib/variables.scss';
+
+/* Components */
+@import "./components/Navbar.scss";
+@import "./components/Footer.scss";
+
+/* Bootstrap */
+@import "~bootstrap/scss/bootstrap";
