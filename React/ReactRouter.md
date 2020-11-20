@@ -114,3 +114,89 @@ It works as a "a" anchor.
         <img className='header_img' src={logo} alt='Platzi video' />
       </Link>
     )
+
+## Redux
+
+Permite mantener el estado de la aplicación sin mutaciones.
+
+`npm install redux react-redux --save`
+
+File structure:
+
+- src:
+  - actions:
+    - index.js
+  - reducers:
+    - index.js
+    
+    
+    // src/reducers/index.js
+    // ------------------------------------------------------------
+    const reducer = (state, action) => {
+      return state;
+    };
+    
+    export default reducer;
+
+
+    // src/index.js
+    // ------------------------------------------------------------
+    // React
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import { Provider } from 'react-redux';
+    import { createStore } from 'redux';
+    
+    // Reducers
+    import reducer from './reducers';
+    
+    // Containers
+    import App from './routes/App';
+    
+    // Styles
+    import './assets/styles/App.scss';
+    
+    const initialState = {
+      'user': '',
+    };
+    
+    const store = createStore(reducer, initialState);
+    
+    ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.getElementById('app'),
+    );
+   
+
+    // src/containers/Home.jsx
+    // ------------------------------------------------------------
+    // React
+    import React from 'react';
+    import { connect } from 'react-redux';
+    
+    const Home = ({ user }) => {
+      return (
+        <>
+          <section className='container'>
+            <h1>Hello, World!</h1>
+            <h3>{user}</h3>
+          </section>
+        </>
+      );
+    };
+    
+    const mapStateToProps = (state) => {
+      return {
+        user: state.user,
+      };
+    };
+    
+    // export default connect(props, actions)(Home);
+    // 'actions' allows execute some reducer.
+    export default connect(mapStateToProps, null)(Home);
+
+## Reducers
+
+
