@@ -1,5 +1,7 @@
 // React
-import React from 'react';
+import React, { useState } from 'react';
+
+// Redux
 import { connect } from 'react-redux';
 import { setUser, deleteUser } from '../actions';
 
@@ -8,19 +10,24 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 const Home = (props) => {
-  const { user } = props;
+  const [{userName}, setData] = useState({
+    userName: props.userName,
+  })
+  
   const handleSubmitData = (e) => {
     e.preventDefault();
     props.setUser(e.target.userName.value);
+    setData({ userName: e.target.userName.value });
   };
   const handleDeleteUser = () => {
     props.deleteUser('');
+    setData({ userName: '' });
   };
   return (
     <>
       <section className='container'>
         <h1>Hello, World!</h1>
-        <h3>{user}</h3>
+        <h3>{userName}</h3>
         <Form onSubmit={handleSubmitData}>
           <Form.Group controlId='userName'>
             <Form.Label>Enter name</Form.Label>
@@ -29,7 +36,10 @@ const Home = (props) => {
           <Button type='submit'>
             Change name
           </Button>
-          <Button type='button' className='ml-2' onClick={handleDeleteUser}>
+          <Button 
+            type='button' 
+            className='ml-2' 
+            onClick={handleDeleteUser}>
             Delete User
           </Button>
         </Form>
@@ -40,7 +50,7 @@ const Home = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    userName: state.userName,
   };
 };
 

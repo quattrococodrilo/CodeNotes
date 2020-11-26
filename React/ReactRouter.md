@@ -124,21 +124,15 @@ Permite mantener el estado de la aplicación sin mutaciones.
 File structure:
 
 - src:
-  - actions:
-    - index.js
-  - reducers:
-    - index.js
-    
-    
-    // src/reducers/index.js
-    // ------------------------------------------------------------
-    const reducer = (state, action) => {
-      return state;
-    };
-    
-    export default reducer;
+  - actions: event that describes something that happened in the application, and serve as the sole way to describe an intention to mutate the data.
 
-
+    - index.js
+  
+  - reducers: describes how was changed the state of application and update the state.
+    
+    - index.js
+    
+    
     // src/index.js
     // ------------------------------------------------------------
     // React
@@ -157,7 +151,7 @@ File structure:
     import './assets/styles/App.scss';
     
     const initialState = {
-      'user': '',
+      'user': 'usuario',
     };
     
     const store = createStore(reducer, initialState);
@@ -168,35 +162,187 @@ File structure:
       </Provider>,
       document.getElementById('app'),
     );
-   
 
-    // src/containers/Home.jsx
+    // ACTIONS: src/actions/index.js
+    // ------------------------------------------------------------
+    /* 
+     * type: Indicates the action that will be executed.
+     * payload: Information that we are sending to reducer.  
+    */ 
+    export const setUser = (payload) => ({
+      type: 'SET_USER',
+      payload,
+    });
+    
+    export const deleteUser = (payload) => ({
+      type: 'DELETE_USER',
+      payload,
+    });
+
+    // REDUCER: src/reducers/index.js
+    // ------------------------------------------------------------
+    const reducer = (state, action) => {
+      switch (action.type) {
+        case 'SET_USER':
+          return {
+            ...state,
+            user: action.payload,
+          };
+        case 'DELETE_USER':
+          return {
+            ...state,
+            user: action.payload,
+          };
+        default:
+          return state;
+      }
+    };
+    
+    export default reducer;
+
+    // COMPONENT: src/containers/home.jsx
     // ------------------------------------------------------------
     // React
     import React from 'react';
     import { connect } from 'react-redux';
+    import { setUser, deleteUser } from '../actions';
     
-    const Home = ({ user }) => {
+    // Bootstrap
+    import Form from 'react-bootstrap/Form';
+    import Button from 'react-bootstrap/Button';
+    
+    const Home = (props) => {
+      const { user } = props;
+      const handleSubmitData = (e) => {
+        e.preventDefault();
+        props.setUser(e.target.userName.value);
+      };
+      const handleDeleteUser = () => {
+        props.deleteUser('');
+      };
       return (
         <>
           <section className='container'>
             <h1>Hello, World!</h1>
             <h3>{user}</h3>
+            <Form onSubmit={handleSubmitData}>
+              <Form.Group controlId='userName'>
+                <Form.Label>Enter name</Form.Label>
+                <Form.Control type='text' name='userName' />
+              </Form.Group>
+              <Button type='submit'>
+                Change name
+              </Button>
+              <Button type='button' className='ml-2' onClick={handleDeleteUser}>
+                Delete User
+              </Button>
+            </Form>
           </section>
         </>
       );
     };
     
+    // Gets from state data that will be used. 
     const mapStateToProps = (state) => {
       return {
         user: state.user,
       };
     };
     
+    // Indicates what actios will be used.
+    const mapDispatchToProps = {
+      setUser,
+      deleteUser,
+    };
+    
     // export default connect(props, actions)(Home);
     // 'actions' allows execute some reducer.
-    export default connect(mapStateToProps, null)(Home);
+    export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
-## Reducers
+## Gravatar
 
+`npm install md5 --save`
+
+## Return
+
+Allows return to the previous page.
+
+`props.history.goBack()`
+
+## Set/get params from URL
+
+    // src/routes/App.js
+    //:id is the param
+    // ------------------------------------------------------------
+    const App = () => (
+      <BrowserRouter>
+        <Layout>
+          <Switch>
+            ...
+            <Route exact path='/videos/:id' component={Login} />
+            ...
+          </Switch>
+        </Layout>
+      </BrowserRouter>
+    );
+
+    // src/components/Player.jsx
+    // ------------------------------------------------------------
+    const Player = (props) => {
+      const { id } = props.match.params;
+      ...
+    }
+
+## Redirect
+
+This is a component of React Router.
+    
+    import { Redirect } from 'react-router-dom';
+    
+    const Player (props) => {
+      ...
+      return hasPlaying ? (JSX code) : <Redirect to='/404/' />;
+    };
+
+
+## Classnames
+
+This package is used for validate css classes.
+
+`npm install classnames --save`
+
+    // src/components/header.jsx
+    // ------------------------------------------------------------
+    ...
+    import classNames from 'classnames';
+    ...
+
+    const Header = (props) => {
+      ...
+      const { user, isLogin, isRegister} = props
+      ...
+      headerClass = classNames('header', {
+        isLogin,
+        isRegister,
+      })
+
+      return (
+        <header clasName={headerClass}>
+        ...
+      )
+    }
+
+    // src/containers/Login.jsx
+    // ------------------------------------------------------------
+    import Header from '../components/Header';
+
+    const Login = () => {
+      ...
+      return {
+        <>
+          <Header isLogin />
+        </>
+      }
+    }
+    
 
